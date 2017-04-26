@@ -24,8 +24,11 @@
 
                 </form>
 
+                <a href="{{url('user/login')}}">Lupa password?</a>
+                <hr>
+
                 <p class="text-center text-muted">Belum registrasi?</p>
-                <p class="text-center text-muted"><a href="customer-register.html"><strong>Register sekarang</strong></a>! Mudah dan cepat dalam pembelian voucher!</p>
+                <p class="text-center text-muted"><a href="{{url('user/register')}}"><strong>Register sekarang</strong></a>! Mudah dan cepat dalam pembelian voucher!</p>
 
             </div>
         </div>

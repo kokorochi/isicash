@@ -2,6 +2,8 @@
 
 namespace App\Providers;
 
+use App\Policies\ProductPolicy;
+use App\Product;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvider;
 
@@ -14,6 +16,7 @@ class AuthServiceProvider extends ServiceProvider
      */
     protected $policies = [
         'App\Model' => 'App\Policies\ModelPolicy',
+        Product::class => ProductPolicy::class,
     ];
 
     /**
@@ -25,6 +28,16 @@ class AuthServiceProvider extends ServiceProvider
     {
         $this->registerPolicies();
 
-        //
+        Gate::define('isSuperUser', function($user){
+            return $user->userAuth()->where('auth_type', 'SU')->exists();
+        });
+
+        Gate::define('isAdmin', function($user){
+            return $user->userAuth()->where('auth_type', 'A')->exists();
+        });
+
+        Gate::define('isUser', function($user){
+            return $user->userAuth()->where('auth_type', 'U')->exists();
+        });
     }
 }

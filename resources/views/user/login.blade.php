@@ -1,5 +1,20 @@
 @extends('layouts.main_layout')
 
+@php
+    $get_olds = session()->getOldInput();
+    if(count($get_olds))
+    {
+        $data = [];
+        foreach ($get_olds as $key => $get_old)
+        {
+            if($key !== '_token')
+            {
+                $data[$key] = old($key);
+            }
+        }
+    }
+@endphp
+
 @section('content')
     <div id="heading-breadcrumbs">
         <div class="container">
@@ -23,41 +38,7 @@
         <div class="container">
 
             <div class="row">
-                <div class="col-md-6">
-                    <div class="box">
-                        <h2 class="text-uppercase">New account</h2>
-
-                        <p class="lead">Not our registered customer yet?</p>
-                        <p>With registration with us new world of fashion, fantastic discounts and much more opens to
-                            you! The whole process will not take you more than a minute!</p>
-                        <p class="text-muted">If you have any questions, please feel free to <a href="contact.html">contact
-                                us</a>, our customer service center is working for you 24/7.</p>
-
-                        <hr>
-
-                        <form action="customer-orders.html" method="post">
-                            <div class="form-group">
-                                <label for="name-login">Name</label>
-                                <input type="text" class="form-control" id="name-login">
-                            </div>
-                            <div class="form-group">
-                                <label for="email-login">Email</label>
-                                <input type="text" class="form-control" id="email-login">
-                            </div>
-                            <div class="form-group">
-                                <label for="password-login">Password</label>
-                                <input type="password" class="form-control" id="password-login">
-                            </div>
-                            <div class="text-center">
-                                <button type="submit" class="btn btn-template-main"><i class="fa fa-user-md"></i>
-                                    Register
-                                </button>
-                            </div>
-                        </form>
-                    </div>
-                </div>
-
-                <div class="col-md-6">
+                <div class="col-md-12">
                     <div class="box">
                         <h2 class="text-uppercase">Login</h2>
 
@@ -69,17 +50,51 @@
 
                         <hr>
 
-                        <form action="customer-orders.html" method="post">
-                            <div class="form-group">
-                                <label for="email">Email</label>
-                                <input type="text" class="form-control" id="email">
+                        <form action="{{url('user/login')}}" method="post">
+                            <div class="form-group {{$errors->has('username') ? 'has-error' : ''}}">
+                                <label for="username">Username</label>
+                                <input name="username" type="text" class="form-control">
+                                @if($errors->has('username'))
+                                    <span class="help-block">{{$errors->first('username')}}</span>
+                                @endif
                             </div>
-                            <div class="form-group">
+                            <div class="form-group {{$errors->has('password') ? 'has-error' : ''}}">
                                 <label for="password">Password</label>
-                                <input type="password" class="form-control" id="password">
+                                <input name="password" type="password" class="form-control">
+                                @if($errors->has('password'))
+                                    <span class="help-block">{{$errors->first('password')}}</span>
+                                @endif
                             </div>
+                            {{csrf_field()}}
                             <div class="text-center">
                                 <button type="submit" class="btn btn-template-main"><i class="fa fa-sign-in"></i> Log in
+                                </button>
+                            </div>
+                        </form>
+
+                        <hr>
+
+                        <p class="lead">Lupa Password?</p>
+                        <p class="text-muted">Silahkan masukkan username atau email untuk melakukan reset password.
+                            Link reset password akan dikirimkan ke email anda. Harap periksa junk/spam jika email
+                            tidak ditemukan di inbox.</p>
+
+                        <form action="{{url('user/forgot')}}" method="post">
+                            <div class="form-group">
+                                <label for="username">Username</label>
+                                <input name="username" type="text" class="form-control">
+                            </div>
+                            <div class="form-group">
+                                <label for="email">Email</label>
+                                <input name="email" type="text" class="form-control">
+                            </div>
+
+                            {{csrf_field()}}
+                            <input type="hidden" name="_method" value="PUT">
+
+                            <div class="text-center">
+                                <button type="submit" class="btn btn-template-main">
+                                    <i class="fa fa-share-square"></i> Kirim Email
                                 </button>
                             </div>
                         </form>

@@ -21,8 +21,8 @@ class CreateProductPricesTable extends Migration
             $table->decimal('sales_price', 15,2);
             $table->decimal('discount', 15,2)->nullable();
             $table->decimal('final_price', 15,2);
-            $table->string('created_by');
-            $table->string('updated_by');
+            $table->string('created_by')->nullable();
+            $table->string('updated_by')->nullable();
             $table->timestamps();
             $table->softDeletes();
         });

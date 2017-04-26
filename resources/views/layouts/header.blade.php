@@ -8,10 +8,19 @@ _________________________________________________________ -->
                 </div>
                 <div class="col-xs-7">
                     <div class="login">
-                        <a href="#" data-toggle="modal" data-target="#login-modal"><i class="fa fa-sign-in"></i> <span
-                                    class="hidden-xs text-uppercase">Sign in</span></a>
-                        <a href="{{url('user/login')}}"><i class="fa fa-user"></i> <span
-                                    class="hidden-xs text-uppercase">Register</span></a>
+                        @if(Auth::user())
+                            <span class="hidden-xs text-uppercase">
+                                Selamat datang, {{Auth::user()->userAccount()->first()->full_name}}
+                            </span>
+                            |
+                            <a href="{{url('user/logout')}}"><i class="fa fa-sign-out"></i> <span
+                                        class="hidden-xs text-uppercase">Logout</span></a>
+                        @else
+                            <a href="#" data-toggle="modal" data-target="#login-modal"><i class="fa fa-sign-in"></i> <span
+                                        class="hidden-xs text-uppercase">Sign in</span></a>
+                            <a href="{{url('user/register')}}"><i class="fa fa-user"></i> <span
+                                        class="hidden-xs text-uppercase">Register</span></a>
+                        @endif
                     </div>
 
                 </div>
@@ -49,22 +58,22 @@ _________________________________________________________ -->
                 <div class="navbar-collapse collapse" id="navigation">
 
                     <ul class="nav navbar-nav navbar-right">
-                        <li class="dropdown active">
-                            <a href="index.html" class="dropdown-toggle">Home </b></a>
+                        <li class="dropdown {{Request::is('/', '/') ? 'active' : null }}">
+                            <a href="{{url('/')}}" class="dropdown-toggle">Home</a>
                         </li>
-                        <li class="dropdown">
+                        <li class="dropdown {{Request::is('products', 'products/*') ? 'active' : null }}">
                             <!-- <li class="dropdown use-yamm yamm-fw"> -->
                             <a href="#" class="dropdown-toggle" data-toggle="dropdown">Produk<b class="caret"></b></a>
                             <ul class="dropdown-menu">
                                 <li>
-                                    <a href="contact.html">Voucher Game</a>
+                                    <a href="{{url('products?category_code=VG')}}">Voucher Game</a>
                                 </li>
                                 <li>
-                                    <a href="contact2.html">Semua Produk</a>
+                                    <a href="{{url('products')}}">Semua Produk</a>
                                 </li>
                             </ul>
                         </li>
-                        <li class="dropdown">
+                        <li class="dropdown {{Request::is('manuals', 'manuals/*') ? 'active' : null }}">
                             <a href="#" class="dropdown-toggle" data-toggle="dropdown">Panduan Pengguna <b
                                         class="caret"></b></a>
                             <ul class="dropdown-menu">
@@ -79,40 +88,53 @@ _________________________________________________________ -->
                                 </li>
                             </ul>
                         </li>
-                        <!-- ========== FULL WIDTH MEGAMENU ================== -->
-                        <li class="dropdown">
-                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" data-hover="dropdown"
-                               data-delay="200">User <b class="caret"></b></a>
-                            <ul class="dropdown-menu">
-                                <li>
-                                    <a href="">Profile</a>
-                                </li>
-                                <li>
-                                    <a href="">Topup</a>
-                                </li>
-                                <li>
-                                    <a href="">Histori Pembelian</a>
-                                </li>
-                            </ul>
-                        </li>
-                        <!-- ========== FULL WIDTH MEGAMENU END ================== -->
+                        <!-- ========== USER MENU ================== -->
+                        @can('isUser')
+                            <li class="dropdown {{Request::is('user', 'user/*') ? 'active' : null }}">
+                                <a href="#" class="dropdown-toggle" data-toggle="dropdown" data-hover="dropdown"
+                                   data-delay="200">User <b class="caret"></b></a>
+                                <ul class="dropdown-menu">
+                                    <li>
+                                        <a href="">Profile</a>
+                                    </li>
+                                    <li>
+                                        <a href="{{url('user/vouchers')}}">Voucher</a>
+                                    </li>
+                                    <li>
+                                        <a href="{{url('user/carts')}}">Keranjang Belanja</a>
+                                    </li>
+                                    <li>
+                                        <a href="">Topup</a>
+                                    </li>
+                                    <li>
+                                        <a href="{{url('user/histories')}}">Histori Pembelian</a>
+                                    </li>
+                                </ul>
+                            </li>
+                        @endcan
+                        <!-- ========== USER MENU END ================== -->
 
-                        <li class="dropdown">
-                            <a href="javascript: void(0)" class="dropdown-toggle" data-toggle="dropdown">Admin <b
-                                        class="caret"></b></a>
-                            <ul class="dropdown-menu">
-                                <li><a href="contact.html">Banner</a>
-                                </li>
-                                <li><a href="contact2.html">Berita</a>
-                                </li>
-                                <li><a href="contact3.html">Produk</a>
-                                </li>
-                                <li><a href="contact3.html">Voucher</a>
-                                </li>
-                                <li><a href="contact3.html">User</a>
-                                </li>
-                            </ul>
-                        </li>
+                        <!-- ========== ADMIN MENU ================== -->
+                        @can('isAdmin')
+                            <li class="dropdown">
+                                <a href="javascript: void(0)" class="dropdown-toggle" data-toggle="dropdown">Admin <b
+                                            class="caret"></b></a>
+                                <ul class="dropdown-menu">
+                                    <li><a href="contact.html">Banner</a>
+                                    </li>
+                                    <li><a href="contact2.html">Berita</a>
+                                    </li>
+                                    <li><a href="{{url('admin/products')}}">Produk</a>
+                                    </li>
+                                    <li><a href="{{url('admin/vouchers')}}">Voucher</a>
+                                    </li>
+                                    <li><a href="{{url('admin/users')}}">User</a>
+                                    </li>
+                                </ul>
+                            </li>
+                        @endcan
+                        <!-- ========== ADMIN MENU END ================== -->
+
                     </ul>
 
                 </div>

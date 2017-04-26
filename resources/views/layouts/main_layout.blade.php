@@ -35,12 +35,14 @@
     <![endif]-->
 
     <!-- Favicon and apple touch icons-->
-    <link rel="shortcut icon" href="img/isicash-icon.png"/>
-{{--<link rel="apple-touch-icon" href="img/isicash-icon.png"/>--}}
-<!-- owl carousel css -->
+    <link rel="shortcut icon" href="{{url('img/isicash-icon.png')}}"/>
+    <!-- End Favicon -->
 
-    <link href="{{url('css/owl.carousel.css')}}" rel="stylesheet">
-    <link href="{{url('css/owl.theme.css')}}" rel="stylesheet">
+    @if(isset($pages_css))
+        @foreach($pages_css as $css)
+            <link href="{{url($css)}}" rel="stylesheet">
+        @endforeach
+    @endif
 </head>
 
 <body>
@@ -74,6 +76,7 @@
 <script src="{{url('js/jquery.counterup.min.js')}}"></script>
 <script src="{{url('js/jquery.parallax-1.1.3.js')}}"></script>
 <script src="{{url('js/front.js')}}"></script>
+<script src="{{url('js/customize.js')}}"></script>
 
 @php
     if(!isset($sessions))
@@ -82,7 +85,7 @@
         {
             if(Session::has('alert-' . $msg))
             {
-                $sessions['alert-' .$msg] = Session::get('alert-' . $msg);
+                $sessions['alert-' .$msg] = Session::pull('alert-' . $msg);
             }
         }
     }
@@ -93,14 +96,41 @@
             $.notify({
                 message: "{{$sessions['alert-' . $msg]}}"
             },{
-                type: "{{$msg}}"
+                type: "{{$msg}}",
+                placement: {
+                    from: "bottom"
+                },
+                animate: {
+                    enter: "animated fadeInRight",
+                    exit: "animated fadeOutRight"
+                }
             })
         @endif
     @endforeach
+
+    @if(isset($errors) && $errors->has('alert-danger'))
+        @foreach($errors->get("alert-danger") as $error)
+            $.notify({
+            message: "{{$error}}"
+        },{
+            type: "danger",
+            placement: {
+                from: "bottom"
+            },
+            animate: {
+                enter: "animated fadeInRight",
+                exit: "animated fadeOutRight"
+            }
+        })
+        @endforeach
+    @endif
 </script>
 
-<!-- owl carousel -->
-<script src="{{url('js/owl.carousel.min.js')}}"></script>
+@if(isset($pages_js))
+    @foreach($pages_js as $js)
+        <script src="{{url($js)}}"></script>
+    @endforeach
+@endif
 
 </body>
 

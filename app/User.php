@@ -38,4 +38,9 @@ class User extends Authenticatable
     {
         return $this->hasMany(UserAuth::class);
     }
+
+    public function shoppingCart()
+    {
+        return $this->hasMany(ShoppingCart::class, 'username', 'username');
+    }
 }

@@ -16,12 +16,12 @@ class CreateVouchersTable extends Migration
         Schema::create('vouchers', function (Blueprint $table) {
             $table->increments('id');
             $table->integer('product_id', false, true);
-            $table->string('code');
+            $table->string('code', 500);
             $table->integer('order_id', false, true)->nullable();
-            $table->integer('order_item_id', false, true)->nullable();
-            $table->boolean('user')->default(false);
-            $table->string('created_by');
-            $table->string('updated_by');
+            $table->smallInteger('order_item', false, true)->nullable();
+            $table->boolean('used')->default(false);
+            $table->string('created_by')->nullable();
+            $table->string('updated_by')->nullable();
             $table->timestamps();
             $table->softDeletes();
         });

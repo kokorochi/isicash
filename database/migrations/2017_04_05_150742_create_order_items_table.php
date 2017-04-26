@@ -18,6 +18,7 @@ class CreateOrderItemsTable extends Migration
             $table->integer('order_id', false, true);
             $table->integer('product_id', false, true);
             $table->integer('product_price_id', false, true);
+            $table->smallInteger('item', false, true);
             $table->smallInteger('quantity', false, true);
             $table->decimal('total_amount', 15, 2);
             $table->timestamps();

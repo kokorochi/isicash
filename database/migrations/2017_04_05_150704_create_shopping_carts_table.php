@@ -15,7 +15,7 @@ class CreateShoppingCartsTable extends Migration
     {
         Schema::create('shopping_carts', function (Blueprint $table) {
             $table->increments('id');
-            $table->integer('user_id', false, true);
+            $table->string('username',30);
             $table->smallInteger('item', false, true);
             $table->integer('product_id', false, true);
             $table->smallInteger('quantity', false, true)->nullable();
