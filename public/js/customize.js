@@ -70,7 +70,7 @@ $(document).ready(function () {
             columnDefs: [
                 {
                     orderable: false,
-                    defaultContent: "<a href='#' class='btn btn-xs btn-warning update_used'><i class='fa fa-refresh'></i></a>",
+                    defaultContent: "<a href='#' class='btn btn-xs btn-warning update_used'><i class='fa fa-check'></i></a>",
                     targets: 5
                 },
                 {
@@ -140,5 +140,55 @@ $(document).ready(function () {
                 })
             }
         });
+    });
+
+    if ($("#table-user-invoice-list").length) {
+        var invoiceDatatable = $("#table-user-invoice-list").dataTable({
+            autoWidth: true,
+            responsive: true,
+            serverSide: true,
+            processing: true,
+            ajax: baseUrl + '/user/orders/ajax',
+            columnDefs: [
+                {
+                    className: "dt-right",
+                    targets: 3
+                },
+                {
+                    className: "dt-center",
+                    orderable: false,
+                    defaultContent: "<a href='#' class='btn btn-xs btn-warning order_detail'><i class='fa fa-search-plus'></i></a>",
+                    targets: 5
+                }
+            ]
+            //     {
+            //         className: "dt-center",
+            //         targets: [4, 5]
+            //     },
+            //     {
+            //         className: "cn-font",
+            //         targets: 1
+            //     },
+            //     {
+            //         visible: false,
+            //         targets: 0
+            //     }
+            // ],
+        });
+    }
+
+    $(document).on("click", "a.order_detail", function (e) {
+        e.preventDefault();
+        var dt_row = $(this).closest("li").data("dt-row");
+
+        if (dt_row >= 0) {
+            var position = dt_row;
+        } else {
+            var target_row = $(this).closest("tr").get(0);
+            var position = invoiceDatatable.fnGetPosition(target_row);
+        }
+        var order_id = invoiceDatatable.fnGetData(position)[2];
+
+        window.open(baseUrl + "/user/orders/detail?order_id=" + order_id);
     });
 });

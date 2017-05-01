@@ -55,7 +55,8 @@ class VoucherController extends Controller {
                 })
 //                ->select(['orders.*', 'vouchers.*', 'products.*', 'sub_categories.*'])
                 ->select(['vouchers.id as vi', 'vouchers.code as vc', 'sub_categories.name as scn', 'products.name as pn', 'vouchers.used as vu'])
-                ->where('orders.username', '=', Auth::user()->username);
+                ->where('orders.username', '=', Auth::user()->username)
+                ->where('orders.order_type', '=', 'BUY');
 
             if (isset($input['search']['value']))
             {
@@ -66,8 +67,7 @@ class VoucherController extends Controller {
                         ->orwhere('products.name', 'like', '%' . $input['search']['value'] . '%');
                 });
             }
-
-
+            
             if ($input['order'][0]['column'] == 0 || $input['order'][0]['column'] == 1)
             {
                 $order_by = 'vouchers.code';
@@ -155,7 +155,6 @@ class VoucherController extends Controller {
             }
 
             if ($voucher->used == 0) $voucher->used = 1;
-            else $voucher->used = 0;
             $voucher->save();
 
             $success = 'Voucher telah diupdate';

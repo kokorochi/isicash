@@ -22,6 +22,8 @@ class CreateOrdersTable extends Migration
             $table->timestamps();
             $table->softDeletes();
         });
+
+        DB::update("ALTER TABLE orders AUTO_INCREMENT = 1000;");
     }
 
     /**

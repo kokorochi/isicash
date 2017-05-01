@@ -4,7 +4,11 @@
     margin-bottom: 10px;
 }
 
-#table-user-voucher-list tbody td.cn-font {
+.wdt-50{
+    width: 50px;
+}
+
+#table-user-voucher-list tbody td.cn-font, .cn-font {
     font-family: monospace;
     font-weight: bold;
 }

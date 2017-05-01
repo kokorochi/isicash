@@ -38,4 +38,7 @@ Route::group(['prefix' => 'user'], function() {
     Route::get('vouchers/ajax', 'VoucherController@getVoucher');
     Route::put('vouchers/mark-used', 'VoucherController@updateUsed');
 
+    Route::get('orders', 'OrderController@index');
+    Route::get('orders/ajax', 'OrderController@getOrder');
+    Route::get('orders/detail', 'OrderController@detail');
 });

@@ -107,7 +107,7 @@ _________________________________________________________ -->
                                         <a href="">Topup</a>
                                     </li>
                                     <li>
-                                        <a href="{{url('user/histories')}}">Histori Pembelian</a>
+                                        <a href="{{url('user/orders')}}">Histori Pembelian</a>
                                     </li>
                                 </ul>
                             </li>

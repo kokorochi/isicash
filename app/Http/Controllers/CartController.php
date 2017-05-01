@@ -189,7 +189,7 @@ class CartController extends Controller {
 
             // End Make Order Proceed Checkout
 
-            return redirect()->intended('/');
+            return view('');
         }
 
     }
