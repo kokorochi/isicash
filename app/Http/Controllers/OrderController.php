@@ -44,16 +44,16 @@ class OrderController extends Controller {
 
         if (Auth::user())
         {
-            $datas = DB::table('orders')
-                ->join('order_stats', 'order_stats.order_id', '=', 'orders.id')
+            $datas = DB::table('orders as o')
+                ->join('order_stats', 'order_stats.order_id', '=', 'o.id')
                 ->select([
-                    'orders.created_at as oca',
-                    'orders.order_type as oot',
-                    'orders.id as oi',
-                    'orders.total_amount as ota',
+                    'o.id as oi',
+                    'o.created_at as oca',
+                    'o.order_type as oot',
+                    'o.total_amount as ota',
                     'order_stats.status as oss'
                 ])
-                ->where('orders.username', '=', Auth::user()->username);
+                ->where('o.username', '=', Auth::user()->username);
 
             if (isset($input['search']['value']))
             {
@@ -67,19 +67,23 @@ class OrderController extends Controller {
                 });
             }
 
+            $datas = $datas->where('order_stats.item', '=', function ($where){
+                $where->selectRaw('max(`item`) from `order_stats` where `order_id` = `o`.`id`');
+            });
+
             $order_by = null;
             if ($input['order'][0]['column'] == 0)
             {
-                $order_by = 'orders.created_at';
+                $order_by = 'o.created_at';
             } elseif ($input['order'][0]['column'] == 1)
             {
-                $order_by = 'orders.order_type';
+                $order_by = 'o.order_type';
             } elseif ($input['order'][0]['column'] == 2)
             {
-                $order_by = 'orders.id';
+                $order_by = 'o.id';
             } elseif ($input['order'][0]['column'] == 3)
             {
-                $order_by = 'orders.total_amount';
+                $order_by = 'o.total_amount';
             } elseif ($input['order'][0]['column'] == 4)
             {
                 $order_by = 'order_stats.status';

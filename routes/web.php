@@ -23,12 +23,19 @@ Route::put('user/forgot', 'LoginController@sendForgotPassword');
 Route::get('user/reset', 'LoginController@resetPassword');
 Route::put('user/reset', 'LoginController@doReset');
 
-Route::get('admin/products', 'ProductController@adminIndex');
+Route::group(['prefix' => 'admin'], function ()
+{
+    Route::get('products', 'ProductController@adminIndex');
+
+    Route::get('users/topup', 'UserController@topupIndex');
+    Route::put('users/topup', 'UserController@confirmTopup');
+});
 
 Route::get('products', 'ProductController@index');
 Route::get('products/detail', 'ProductController@detail');
 
-Route::group(['prefix' => 'user'], function() {
+Route::group(['prefix' => 'user'], function ()
+{
     Route::get('carts', 'CartController@showCart');
     Route::post('carts/add', 'CartController@addCart');
     Route::put('carts/update', 'CartController@updateCart');
@@ -41,4 +48,6 @@ Route::group(['prefix' => 'user'], function() {
     Route::get('orders', 'OrderController@index');
     Route::get('orders/ajax', 'OrderController@getOrder');
     Route::get('orders/detail', 'OrderController@detail');
+
+    Route::get('topup', 'UserController@userTopup');
 });

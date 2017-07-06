@@ -104,7 +104,7 @@ _________________________________________________________ -->
                                         <a href="{{url('user/carts')}}">Keranjang Belanja</a>
                                     </li>
                                     <li>
-                                        <a href="">Topup</a>
+                                        <a href="{{url('user/topup')}}">Topup</a>
                                     </li>
                                     <li>
                                         <a href="{{url('user/orders')}}">Histori Pembelian</a>
@@ -120,6 +120,8 @@ _________________________________________________________ -->
                                 <a href="javascript: void(0)" class="dropdown-toggle" data-toggle="dropdown">Admin <b
                                             class="caret"></b></a>
                                 <ul class="dropdown-menu">
+                                    <li><a href="{{url('admin/users/topup')}}">Konfirmasi Topup</a>
+                                    </li>
                                     <li><a href="contact.html">Banner</a>
                                     </li>
                                     <li><a href="contact2.html">Berita</a>

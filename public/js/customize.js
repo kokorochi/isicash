@@ -191,4 +191,10 @@ $(document).ready(function () {
 
         window.open(baseUrl + "/user/orders/detail?order_id=" + order_id);
     });
+
+    $(".confirm_topup").on("click", function (e) {
+        e.preventDefault();
+        $("#topup-confirmation-modal form").attr("action", $("#topup-confirmation-modal form").attr('action').replace('order_id', $(this).data("id")));
+        $("#topup-confirmation-modal p.question").text("Anda yakin melakukan konfirmasi topup atas order: " + $(this).data("id") + " ini dengan jumlah topup sebesar: " + $(this).data("total_amount") + " ?");
+    });
 });
