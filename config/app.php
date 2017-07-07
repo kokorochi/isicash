@@ -167,7 +167,7 @@ return [
          * Package Service Providers...
          */
         Laravel\Tinker\TinkerServiceProvider::class,
-
+        \Rap2hpoutre\LaravelLogViewer\LaravelLogViewerServiceProvider::class,
         /*
          * Application Service Providers...
          */
