@@ -12,5 +12,5 @@ class UserVerifications extends Model
         'created_at'
     ];
 
-    protected $timestamps = false;
+    public $timestamps = false;
 }
