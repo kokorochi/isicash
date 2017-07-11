@@ -18,7 +18,7 @@ Route::post('user/login', 'LoginController@doLogin');
 Route::get('user/logout', 'LoginController@logout');
 Route::get('user/register', 'LoginController@register');
 Route::post('user/register', 'LoginController@store');
-Route::put('user/verify', 'LoginController@verifyUser');
+Route::get('user/verify', 'LoginController@verifyUser');
 Route::put('user/forgot', 'LoginController@sendForgotPassword');
 Route::get('user/reset', 'LoginController@resetPassword');
 Route::put('user/reset', 'LoginController@doReset');
