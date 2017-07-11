@@ -29,8 +29,10 @@ Route::group(['prefix' => 'admin'], function ()
 
     Route::get('users/topup', 'UserController@topupIndex');
     Route::put('users/topup', 'UserController@confirmTopup');
+});
 
-    Route::get('logs', '\Rap2hpoutre\LaravelLogViewer\LogViewerController@index');
+Route::middleware(['auth', 'is_super_user'])->group(function(){
+    Route::get('admin/logs', '\Rap2hpoutre\LaravelLogViewer\LogViewerController@index');
 });
 
 Route::get('products', 'ProductController@index');

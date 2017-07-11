@@ -11,4 +11,6 @@ class UserVerifications extends Model
         'token',
         'created_at'
     ];
+
+    protected $timestamps = false;
 }
